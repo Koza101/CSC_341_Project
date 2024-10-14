@@ -1,16 +1,16 @@
 module.exports = {
     "name": "Code Stitch Web Designs",
-    "email": "help@codestitch.app",
-    "phoneForTel": "555-779-4407",
-    "phoneFormatted": "(555) 779-4407",
+    "email": "mkoza002@plattsburgh.edu",
+    "phoneForTel": "",
+    "phoneFormatted": "",
     "address": {
         "lineOne": "First Address Line",
         "lineTwo": "Second Address Line",
-        "city": "Denver",
-        "state": "CO",
-        "zip": "80206",
+        "city": "Plattsburgh",
+        "state": "NY",
+        "zip": "12901",
         "country": "US",
-        "mapLink": "https://maps.app.goo.gl/TEdS5KoLC9ZcULuQ6"
+        "mapLink": ""
     },
     "socials": {
         "facebook": "https://www.facebook.com/",
