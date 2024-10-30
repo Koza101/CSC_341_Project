@@ -1,0 +1,10 @@
+MYORACLEDB =
+  (DESCRIPTION =
+    (RETRY_COUNT = 20)
+    (RETRY_DELAY = 3)
+    (ADDRESS = (PROTOCOL = TCPS)(HOST = adb.us-ashburn-1.oraclecloud.com)(PORT = 1522))
+    (CONNECT_DATA =
+      (SERVICE_NAME = g5450923afc2a36_xfez8k92c7awjrwd_medium.adb.oraclecloud.com)
+    )
+    (SECURITY = (SSL_SERVER_DN_MATCH = YES))
+  )
