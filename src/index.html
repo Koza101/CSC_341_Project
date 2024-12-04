@@ -1,7 +1,7 @@
 ---
 title: 'Web UI Project | CSC-341'
 description: 'Meta description for the page'
-preloadImg: '/assets/images/landing.jpg'
+preloadImg: '/assets/images/server_rack_hero.jpg'
 permalink: '/'
 tags: 'sitemap' # Sitemap will use all pages in content/, due to content.json. As index.html is not included in content/ we need to manually add the sitemap tag to this page (only).
 eleventyNavigation:
@@ -84,14 +84,13 @@ eleventyNavigation:
         <p class="cs-text">
             A Web Project by Mason Kozak & Elizabeth Tchnervina 
         </p>
-        <a href="" class="cs-button-solid">Request Appointment</a>
     </div>
 
     <!-- Background Image -->
     <picture class="cs-background">
-        <source media="(max-width: 600px)" srcset="https://csimg.nyc3.digitaloceanspaces.com/Hero/kitchen-m.jpg">
-        <source media="(min-width: 601px)" srcset="https://csimg.nyc3.digitaloceanspaces.com/Hero/kitchen.jpg">
-        <img fetchpriority="high" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Hero/kitchen.jpg" alt="kitchen" width="2250" height="1500" aria-hidden="true">
+        <source media="(max-width: 600px)" srcset="/assets/images/server_rack_hero.jpg">
+        <source media="(min-width: 601px)" srcset="/assets/images/server_rack_hero.jpg">
+        <img fetchpriority="high" decoding="async" src="/assets/images/server_rack_hero.jpg" alt="database" width="2250" height="1500" aria-hidden="true">
     </picture>
 </section>
 
@@ -103,29 +102,29 @@ eleventyNavigation:
     <ul class="cs-card-group">
         <li class="cs-item">
             <picture class="cs-icon">
-                <img loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Hero/toolbox.svg" alt="appliance" width="52" height="52" aria-hidden="true">
+                <img loading="lazy" decoding="async" src="/assets/svgs/understand.svg" alt="appliance" width="52" height="52" aria-hidden="true">
             </picture>
-            <h2 class="cs-title">Full Kitchen Remodel</h2>
+            <h2 class="cs-title">Understand What's Collected</h2>
             <p class="cs-text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tempus, dolor enim, elit. 
+                We are collecting your hardware information such as the following: CPU Brand, # of CPU Cores, System Manufacturer, System Model, System OS, and Memory Type
             </p>
         </li>
         <li class="cs-item">
             <picture class="cs-icon">
-                <img loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Hero/buildings.svg" alt="appliance" width="52" height="52" aria-hidden="true">
+                <img loading="lazy" decoding="async" src="/assets/svgs/form.svg" alt="appliance" width="52" height="52" aria-hidden="true">
             </picture>
-            <h2 class="cs-title">Exterior Repairs</h2>
+            <h2 class="cs-title">Fill Out Form</h2>
             <p class="cs-text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tempus, dolor enim, elit. 
+                Fill out the form with the requested information. We ask that you be honest with your submission as this helps our data accuracy
             </p>
         </li>
         <li class="cs-item">
             <picture class="cs-icon">
-                <img loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Hero/gear.svg" alt="appliance" width="52" height="52" aria-hidden="true">
+                <img loading="lazy" decoding="async" src="/assets/svgs/click_submit.svg" alt="appliance" width="52" height="52" aria-hidden="true">
             </picture>
-            <h2 class="cs-title">Utility Maintenance</h2>
+            <h2 class="cs-title">Submit</h2>
             <p class="cs-text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tempus, dolor enim, elit. 
+                Click the submit button located at the bottom of the form 
             </p>
         </li>
     </ul>
@@ -139,9 +138,9 @@ eleventyNavigation:
 <section id="contact-2061">
     <div class="cs-container">
         <div class="cs-content">
-            <span class="cs-topper">Application Form</span>
-            <h2 class="cs-title">Apply to Work with Us</h2>
-            <p class="cs-text">Orci eu lobortis elementum nibh  tellus. Vulputate eu scelerisque felis imperdiet proin fermentum leo  vel. Luctus accumsan tortor posuere ac ut consequat semper. Et pharetra  pharetra massa massa ultricies mi quis.</p>
+            <span class="cs-topper">Data Submission Form</span>
+            <h2 class="cs-title">Add Your Info To Our Cloud Database!</h2>
+            <p class="cs-text">This project aims to collect user information and associate it with the hardware you are accessing it with. This information is not sold or marketed and is used for the osle purpose of testing our databasing ability.</p>
         </div>
         <!--Form-->
         <form class="cs-form" id="cs-form-2061" name="Contact Form" method="post">
@@ -196,8 +195,8 @@ eleventyNavigation:
             </div>
         </form>
     </div>
-    <img class="cs-graphic cs-graphic-left" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/dental-drop-green.svg" alt="drop" width="528" height="830" aria-hidden="true" decoding="async">
-    <img class="cs-graphic cs-graphic-right" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/dental-drop-blue.svg" alt="drop" width="528" height="830" aria-hidden="true" decoding="async">
+    <img class="cs-graphic cs-graphic-left" src="/assets/svgs/database.svg" alt="drop" width="528" height="830" aria-hidden="true" decoding="async">
+    <img class="cs-graphic cs-graphic-right" src="/assets/svgs/gears.svg" alt="drop" width="528" height="830" aria-hidden="true" decoding="async">
 </section>
                                 
 
