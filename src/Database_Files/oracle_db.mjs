@@ -1,4 +1,5 @@
 import oracledb from 'oracledb';
+import si from 'systeminformation';
 
 // Function to connect to the database
 export async function connectToDatabase() {
@@ -113,5 +114,43 @@ export async function fetchDevices() {
         throw err;
     } finally {
         await connection.close(); // Ensure the connection is closed
+    }
+}
+
+export async function collectAndInsertDeviceInfo() {
+    try {
+        // Collect system information
+        const cpuInfo = await si.cpu();
+        const systemInfo = await si.system();
+        const osInfo = await si.osInfo();
+        const memoryInfo = await si.mem();
+
+        // Prepare data for insertion
+        const data = {
+            CPU_Brand: cpuInfo.manufacturer || 'Unknown',
+            CPU_Cores: cpuInfo.cores.toString(),
+            Sys_Manufacturer: systemInfo.manufacturer || 'Unknown',
+            Sys_Model: systemInfo.model || 'Unknown',
+            Sys_OS: osInfo.distro || 'Unknown',
+            Memory_Type: memoryInfo.total ? `${(memoryInfo.total / 1073741824).toFixed(2)} GB` : 'Unknown'
+        };
+
+        // Insert data into the database
+        const connection = await connectToDatabase();
+        const query = `
+            INSERT INTO device (
+                CPU_Brand, CPU_Cores, Sys_Manufacturer, Sys_Model, Sys_OS, Memory_Type
+            ) 
+            VALUES (
+                :CPU_Brand, :CPU_Cores, :Sys_Manufacturer, :Sys_Model, :Sys_OS, :Memory_Type
+            )
+        `;
+
+        await connection.execute(query, data, { autoCommit: true });
+
+        console.log('System information inserted successfully!');
+    } catch (err) {
+        console.error('Error collecting or inserting system information:', err);
+        throw err;
     }
 }
