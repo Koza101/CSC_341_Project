@@ -9,8 +9,9 @@
         "watch:eleventy": "cross-env ELEVENTY_ENV=DEV eleventy --serve",
         "build:eleventy": "cross-env ELEVENTY_ENV=PROD eleventy",
         "watch:cms": "npx decap-server",
-        "start": "del-cli ./public --force && npm-run-all --parallel watch:*",
-        "build": "run-s build:*"
+        "start": "del-cli ./public --force && npm-run-all --parallel watch:* server",
+        "build": "run-s build:*",
+        "server": "node src/Database_Files/server.mjs"
     },
     "repository": {
         "type": "git",
@@ -28,6 +29,7 @@
         "@11ty/eleventy-navigation": "^0.3.5",
         "@quasibit/eleventy-plugin-sitemap": "^2.2.0",
         "@sherby/eleventy-plugin-files-minifier": "^1.1.1",
+        "cors": "^2.8.5",
         "cross-env": "^7.0.3",
         "decap-server": "^3.0.1",
         "del-cli": "^5.0.0",
@@ -35,9 +37,13 @@
         "less": "^4.2.0",
         "less-watch-compiler": "^1.16.3",
         "node-fetch": "^3.3.2",
+        "node-oracledb": "^1.0.2",
         "npm-run-all": "^4.1.5",
         "nunjucks": "^3.2.4",
         "oracledb": "^6.6.0",
         "systeminformation": "^5.23.5"
+    },
+    "devDependencies": {
+        "concurrently": "^9.1.0"
     }
 }

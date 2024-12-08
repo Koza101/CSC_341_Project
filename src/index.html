@@ -132,7 +132,7 @@ eleventyNavigation:
                                 
 
 <!-- ============================================ -->
-<!--                   Contact                    -->
+<!--                   User Form                  -->
 <!-- ============================================ -->
 
 <section id="contact-2061">
@@ -143,52 +143,30 @@ eleventyNavigation:
             <p class="cs-text">This project aims to collect user information and associate it with the hardware you are accessing it with. This information is not sold or marketed and is used for the osle purpose of testing our databasing ability.</p>
         </div>
         <!--Form-->
-        <form class="cs-form" id="cs-form-2061" name="Contact Form" method="post">
+        <form  class="cs-form" id="cs-form-2061" name="Contact Form" action="http://localhost:3000/submit" method="POST">
             <label class="cs-label cs-split">
                 First Name *
-                <input class="cs-input" required type="text" id="first-name-2061" name="First Name">
+                <input class="cs-input" required type="text" id="first-name-2061" name="firstName" maxlength="20">
             </label>
             <label class="cs-label cs-split">
                 Last Name *
-                <input class="cs-input" required type="text" id="last-name-2061" name="Last Name">
-            </label>
-            <label class="cs-label cs-split">
-                Email *
-                <input class="cs-input" required type="email" id="email-2061" name="Email">
+                <input class="cs-input" required type="text" id="last-name-2061" name="lastName" maxlength="20">
             </label>
             <label class="cs-label cs-split">
                 Phone Number *
-                <input class="cs-input" required type="tel" id="phone-2061" name="Phone Number">
-            </label>
-            <label class="cs-label">
-                Choose a position *
-                <select class="cs-input cs-select" required id="position-2061" name="Position">
-                    <option value="" disabled selected>Please Choose</option>
-                    <option value="Server">Server</option>
-                    <option value="Chef">Chef</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Other">Other</option>
-                </select>
-            </label>
-            <label class="cs-label">
-                When can you start? *
-                <input class="cs-input cs-date" required type="date" id="start-date-2061" name="Start Date">
-            </label>
-            <label class="cs-label">
-                What is your availability for an interview?
-                <input class="cs-input" type="text" id="interview-availability-2061" name="Interview Availability">
+                <input class="cs-input" required type="text" id="phone-2061" name="phoneNumber" maxlength="20">
             </label>
             <label class="cs-label cs-split">
-                Expected pay range
-                <input class="cs-input" type="text" id="pay-range-2061" name="Pay Range">
+                City *
+                <input class="cs-input" required type="text" id="last-name-2061" name="city" maxlength="50">
             </label>
             <label class="cs-label cs-split">
-                Years experience
-                <input class="cs-input" type="text" id="years-experience-2061" name="Years Experience">
+                State *
+                <input class="cs-input" required type="text" id="last-name-2061" name="state" maxlength="2" placeholder="e.g., NY">
             </label>
-            <label class="cs-label cs-message">
-                Tell us about any experience you have in your position
-                <textarea class="cs-input cs-textarea" id="previous-experience-2061" name="Previous Experience" placeholder="Tell us about your previous experience..."></textarea>
+            <label class="cs-label cs-split">
+                Zipcode *
+                <input class="cs-input" required type="text" id="last-name-2061" name="zipCode" maxlength="10">
             </label>
             <div class="cs-wrapper">
                 <button class="cs-button-solid cs-submit" type="submit">Submit</button>

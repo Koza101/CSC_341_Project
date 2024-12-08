@@ -1,0 +1,108 @@
+---
+title: 'Users'
+description: 'Meta description for the page'
+preloadImg: '/assets/images/cabinets2.jpg'
+permalink: 'users/'
+eleventyNavigation:
+    key: Users
+    order: 200
+---
+
+{% extends "layouts/base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/assets/css/users.css">
+{% endblock %}
+
+{% block body %}
+    <!-- ============================================ -->
+    <!--                    LANDING                   -->
+    <!-- ============================================ -->
+
+    <section id="int-hero">
+        <h1 id="home-h">User List</h1>
+        <picture>
+            <source media="(max-width: 600px)" srcset="/assets/images/cabinets2-m.jpg">
+            <source media="(min-width: 601px)" srcset="/assets/images/cabinets2.jpg">
+            <img aria-hidden="true" decoding="async" src="/assets/images/cabinets2.jpg" alt="kitchen cabinets" loading="eager" width="2500" height="1667">
+        </picture>
+
+    </section>
+
+<h1>User List</h1>
+<table id="user-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Users will be dynamically inserted here -->
+    </tbody>
+</table>
+
+<script>
+    async function fetchUsers() {
+        const tableBody = document.querySelector('#user-table tbody');
+        tableBody.innerHTML = '<tr><td colspan="6">Loading...</td></tr>';
+
+        try {
+            const response = await fetch('http://localhost:3000/api/users');
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const users = await response.json();
+            tableBody.innerHTML = ''; // Clear loading message
+
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user[0]}</td>
+                    <td>${user[1]}</td>
+                    <td>${user[2]}</td>
+                    <td>${user[3]}</td>
+                    <td>${user[4]}</td>
+                    <td><button onclick="deleteUser(${user[0]})">Delete</button></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        } catch (err) {
+            console.error('Error fetching users:', err);
+            tableBody.innerHTML = '<tr><td colspan="6">Failed to load users.</td></tr>';
+        }
+    }
+
+    async function deleteUser(userId) {
+        try {
+            const response = await fetch(`/api/users/${userId}`, { method: 'DELETE' });
+            if (!response.ok) {
+                throw new Error(`Failed to delete user with ID ${userId}`);
+            }
+            alert('User deleted successfully!');
+            location.reload(); // Reload the page to update the list
+        } catch (err) {
+            console.error('Error deleting user:', err);
+            alert('Failed to delete user. Please try again.');
+        }
+    }
+
+    fetchUsers();
+</script>
+
+<td><a href="/detail/" onclick="storeUserId(${user[0]})">View Details</a></td>
+
+<script>
+    function storeUserId(id) {
+        localStorage.setItem('selectedUserId', id); // Save the ID to Local Storage
+        console.log('User ID stored in Local Storage:', id); // Debug log
+    }
+</script>
+
+    {% include 'components/cta.html' %}
+
+{% endblock %}

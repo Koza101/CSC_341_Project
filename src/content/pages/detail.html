@@ -1,0 +1,83 @@
+---
+title: 'User Details'
+description: 'User Details Page'
+preloadImg: '/assets/images/cabinets2.jpg'
+permalink: 'detail/'
+eleventyNavigation:
+    key: Details
+    order: 500
+    hideOnDesktop: false
+---
+
+{% extends "layouts/base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/assets/css/detail.css">
+{% endblock %}
+
+{% block body %}
+
+    <!-- ============================================ -->
+    <!--                    LANDING                   -->
+    <!-- ============================================ -->
+
+    <section id="int-hero">
+        <h1 id="home-h">Details</h1>
+        <picture>
+            <source media="(max-width: 600px)" srcset="/assets/images/cabinets2-m.jpg">
+            <source media="(min-width: 601px)" srcset="/assets/images/cabinets2.jpg">
+            <img aria-hidden="true" decoding="async" src="/assets/images/cabinets2.jpg" alt="kitchen cabinets" loading="eager" width="2500" height="1667">
+        </picture>
+    </section>
+
+<h1>User Details</h1>
+<div id="user-details"></div>
+
+<script>
+    async function fetchUserDetails() {
+        try {
+            // Retrieve the user ID from Local Storage
+            const userId = localStorage.getItem('selectedUserId');
+            console.log('Retrieved User ID:', userId); // Debug log
+
+            if (!userId) {
+                document.getElementById('user-details').innerHTML = `
+                    <p>Error: No user ID found. Please go back and select a user.</p>
+                    <a href="/users/">Go Back to User List</a>
+                `;
+                return;
+            }
+
+            // Fetch the user details from the backend
+            const response = await fetch(`http://localhost:3000/api/users/${userId}`);
+            console.log('Response Status:', response.status);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const user = await response.json();
+            console.log('Fetched User Details:', user);
+
+            // Render user details
+            const detailsDiv = document.getElementById('user-details');
+            detailsDiv.innerHTML = `
+                <p>ID: ${user[0]}</p>
+                <p>First Name: ${user[1]}</p>
+                <p>Last Name: ${user[2]}</p>
+                <p>Phone Number: ${user[3]}</p>
+                <p>City: ${user[4]}</p>
+                <p>State: ${user[5]}</p>
+                <p>ZIP Code: ${user[6]}</p>
+            `;
+        } catch (err) {
+            console.error('Error fetching user details:', err);
+            document.getElementById('user-details').innerHTML = '<p>Failed to load user details.</p>';
+        }
+    }
+
+    // Call the function on page load
+    fetchUserDetails();
+</script>
+
+{% endblock %}
