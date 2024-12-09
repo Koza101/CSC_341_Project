@@ -8,22 +8,18 @@
         "watch:less": "less-watch-compiler ./src/assets/less ./src/assets/css",
         "watch:eleventy": "cross-env ELEVENTY_ENV=DEV eleventy --serve",
         "build:eleventy": "cross-env ELEVENTY_ENV=PROD eleventy",
-        "watch:cms": "npx decap-server",
         "start": "del-cli ./public --force && npm-run-all --parallel watch:* server",
         "build": "run-s build:*",
         "server": "node src/Database_Files/server.mjs"
     },
     "repository": {
-        "type": "git",
-        "url": "git+https://github.com/CodeStitchOfficial/Intermediate-Website-Kit-LESS.git"
+        "type": "git"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/CodeStitchOfficial/Intermediate-Website-Kit-LESS/issues"
-    },
-    "homepage": "https://github.com/CodeStitchOfficial/Intermediate-Website-Kit-LESS#readme",
+
+    "homepage": "",
     "dependencies": {
         "@11ty/eleventy": "^2.0.1",
         "@11ty/eleventy-navigation": "^0.3.5",
@@ -31,7 +27,6 @@
         "@sherby/eleventy-plugin-files-minifier": "^1.1.1",
         "cors": "^2.8.5",
         "cross-env": "^7.0.3",
-        "decap-server": "^3.0.1",
         "del-cli": "^5.0.0",
         "dotenv": "^16.4.7",
         "esbuild": "^0.21.4",
