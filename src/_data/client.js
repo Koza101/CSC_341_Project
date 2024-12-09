@@ -1,12 +1,12 @@
 module.exports = {
-    "name": "Code Stitch Web Designs",
+    "name": "Web UI Project | CSC-341",
     "email": "mkoza002@plattsburgh.edu",
     "phoneForTel": "",
     "phoneFormatted": "",
     "address": {
-        "lineOne": "First Address Line",
-        "lineTwo": "Second Address Line",
-        "city": "Plattsburgh",
+        "lineOne": "",
+        "lineTwo": "",
+        "city": "",
         "state": "NY",
         "zip": "12901",
         "country": "US",

@@ -429,3 +429,127 @@
         }
     }
 }
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif; // If you have a core font family variable, replace here
+
+    thead {
+        background-color: var(--secondaryLight);
+
+        th {
+            border: 1px solid var(--headerColor);
+            padding: 10px;
+            text-align: left;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: var(--bodyFontSize);
+            color: var(--bodyTextColorWhite);
+        }
+    }
+
+    td {
+        border: 1px solid var(--headerColor);
+        padding: 10px;
+        text-align: left;
+        font-size: var(--bodyFontSize);
+        color: var(--bodyTextColor);
+    }
+
+    tr:nth-child(even) {
+        background-color: var(--bodyTextColorWhite);
+    }
+
+    tr:hover {
+        background-color: #e9e9e9; // If you want a core variable for hover background, replace this
+    }
+}
+
+.edit-modal {
+    display: none; // Hidden by default; shown with JS
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; // Enable scroll if needed
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+    box-sizing: border-box;
+
+    .edit-modal-content {
+        background: var(--bodyTextColorWhite);
+        margin: auto;
+        padding: 20px;
+        border: 1px solid var(--headerColor);
+        width: 300px;
+        border-radius: 5px;
+        position: relative;
+        font-family: Arial, sans-serif; // Replace if you have a core font variable
+        animation: fadeIn .3s ease-in-out;
+
+        h3 {
+            margin-top: 0;
+            color: var(--headerColor);
+            font-size: var(--bodyFontSize);
+        }
+
+        .edit-user-form {
+            label {
+                display: block;
+                margin-bottom: 10px;
+                font-size: var(--bodyFontSize);
+                color: var(--bodyTextColor);
+
+                input[type="text"] {
+                    width: 100%;
+                    padding: 8px;
+                    margin-top: 5px;
+                    box-sizing: border-box;
+                    border: 1px solid var(--headerColor);
+                    border-radius: 3px;
+                    font-size: var(--bodyFontSize);
+                    color: var(--bodyTextColor);
+                }
+            }
+
+            .modal-buttons {
+                margin-top: 20px;
+                text-align: right;
+
+                button {
+                    padding: 8px 14px;
+                    margin-left: 10px;
+                    border: none;
+                    border-radius: 3px;
+                    font-size: var(--bodyFontSize);
+                    cursor: pointer;
+
+                    &[type="submit"] {
+                        background-color: var(--primary);
+                        color: var(--bodyTextColorWhite);
+                    }
+
+                    &[type="button"] {
+                        background-color: #ccc; // If you have a neutral color variable, use it here
+                        color: var(--bodyTextColor);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0; 
+        margin-top: -10px;
+    }
+    to {
+        opacity: 1; 
+        margin-top: 0;
+    }
+}

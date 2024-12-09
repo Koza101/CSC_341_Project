@@ -265,3 +265,34 @@
     opacity: 0.5;
   }
 }
+.device-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+}
+.device-table thead {
+  background-color: var(--secondaryLight);
+}
+.device-table thead th {
+  border: 1px solid var(--headerColor);
+  padding: 10px;
+  text-align: left;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: var(--bodyFontSize);
+  color: var(--bodyTextColorWhite);
+}
+.device-table tbody td {
+  border: 1px solid var(--headerColor);
+  padding: 10px;
+  text-align: left;
+  font-size: var(--bodyFontSize);
+  color: var(--bodyTextColor);
+}
+.device-table tbody tr:nth-child(even) {
+  background-color: var(--bodyTextColorWhite);
+}
+.device-table tbody tr:hover {
+  background-color: #e9e9e9;
+}

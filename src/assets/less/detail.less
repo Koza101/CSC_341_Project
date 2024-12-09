@@ -319,3 +319,41 @@
         }
     }
 }
+
+
+.device-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif; // Replace with a variable if you have one
+
+    thead {
+        background-color: var(--secondaryLight);
+
+        th {
+            border: 1px solid var(--headerColor);
+            padding: 10px;
+            text-align: left;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: var(--bodyFontSize);
+            color: var(--bodyTextColorWhite);
+        }
+    }
+
+    tbody td {
+        border: 1px solid var(--headerColor);
+        padding: 10px;
+        text-align: left;
+        font-size: var(--bodyFontSize);
+        color: var(--bodyTextColor);
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: var(--bodyTextColorWhite);
+    }
+
+    tbody tr:hover {
+        background-color: #e9e9e9; // Replace with another core variable if preferred
+    }
+}
