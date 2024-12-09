@@ -33,6 +33,7 @@
         "cross-env": "^7.0.3",
         "decap-server": "^3.0.1",
         "del-cli": "^5.0.0",
+        "dotenv": "^16.4.7",
         "esbuild": "^0.21.4",
         "less": "^4.2.0",
         "less-watch-compiler": "^1.16.3",

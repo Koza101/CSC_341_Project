@@ -28,36 +28,64 @@ eleventyNavigation:
         </picture>
     </section>
 
-    <!-- User Form -->
-    <section id="user-form-section">
-        <h2>Add or Edit User</h2>
-        <form id="user-form">
-            <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" name="firstName" required placeholder="John">
 
-            <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" name="lastName" required placeholder="Doe">
+    <!-- ============================================ -->
+    <!--                   Add User Form              -->
+    <!-- ============================================ -->
 
-            <label for="city">City:</label>
-            <input type="text" id="city" name="city" required placeholder="New York">
-
-            <label for="state">State:</label>
-            <input type="text" id="state" name="state" required placeholder="NY">
-
-            <button type="submit">Submit</button>
-        </form>
+    <section id="contact-2061">
+        <div class="cs-container">
+            <div class="cs-content">
+                <span class="cs-topper">Add User Form</span>
+            </div>
+            <!-- Remove the action and method attributes and handle submission via JavaScript -->
+            <form class="cs-form" id="cs-form-2061" name="Contact Form">
+                <label class="cs-label cs-split">
+                    First Name *
+                    <input class="cs-input" required type="text" id="first-name-2061" name="firstName" maxlength="20">
+                </label>
+                <label class="cs-label cs-split">
+                    Last Name *
+                    <input class="cs-input" required type="text" id="last-name-2061" name="lastName" maxlength="20">
+                </label>
+                <label class="cs-label cs-split">
+                    Phone Number *
+                    <input class="cs-input" required type="text" id="phone-2061" name="phoneNumber" maxlength="20">
+                </label>
+                <label class="cs-label cs-split">
+                    City *
+                    <input class="cs-input" required type="text" id="last-name-2061" name="city" maxlength="50">
+                </label>
+                <label class="cs-label cs-split">
+                    State *
+                    <input class="cs-input" required type="text" id="last-name-2061" name="state" maxlength="2" placeholder="e.g., NY">
+                </label>
+                <label class="cs-label cs-split">
+                    Zipcode *
+                    <input class="cs-input" required type="text" id="last-name-2061" name="zipCode" maxlength="10">
+                </label>
+                <div class="cs-wrapper">
+                    <button class="cs-button-solid cs-submit" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
     </section>
 
-    <!-- User Table -->
-    <h2>User List</h2>
+    <!-- ============================================ -->
+    <!--                   User List                  -->
+    <!-- ============================================ -->
+
+    <h2>Existing Users</h2>
     <table id="user-table">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
+                <th>Phone Number</th>
                 <th>City</th>
                 <th>State</th>
+                <th>Zipcode</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -66,10 +94,82 @@ eleventyNavigation:
         </tbody>
     </table>
 
+    <!-- Edit User Modal -->
+    <div id="edit-modal" style="display:none; position:fixed; top:20%; left:40%; background:#fff; padding:20px; border:1px solid #ccc;">
+        <h3>Edit User</h3>
+        <form id="edit-user-form">
+            <input type="hidden" id="editUserId">
+            <label>
+                First Name:
+                <input type="text" id="editFirstName" required maxlength="20">
+            </label>
+            <br>
+            <label>
+                Last Name:
+                <input type="text" id="editLastName" required maxlength="20">
+            </label>
+            <br>
+            <label>
+                Phone Number:
+                <input type="text" id="editPhoneNumber" required maxlength="20">
+            </label>
+            <br>
+            <label>
+                City:
+                <input type="text" id="editCity" required maxlength="50">
+            </label>
+            <br>
+            <label>
+                State:
+                <input type="text" id="editState" required maxlength="2">
+            </label>
+            <br>
+            <label>
+                Zipcode:
+                <input type="text" id="editZipcode" required maxlength="10">
+            </label>
+            <br><br>
+            <button type="submit">Save Changes</button>
+            <button type="button" onclick="closeEditModal()">Cancel</button>
+        </form>
+    </div>
+
     <script>
+        // Handle add user form with fetch
+        const addUserForm = document.getElementById('cs-form-2061');
+        addUserForm.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Prevent the default form submission
+            const formData = new FormData(addUserForm);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('http://localhost:3000/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to create new user: ${response.statusText}`);
+                }
+
+                // Show popup message (alert) without redirecting
+                alert('Form data inserted successfully!');
+
+                // Reset the form if desired
+                addUserForm.reset();
+
+                // Refresh the user list
+                fetchUsers();
+            } catch (err) {
+                console.error(err);
+                alert('Error submitting the form');
+            }
+        });
+
         async function fetchUsers() {
             const tableBody = document.querySelector('#user-table tbody');
-            tableBody.innerHTML = '<tr><td colspan="7">Loading...</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="8">Loading...</td></tr>';
 
             try {
                 const response = await fetch('http://localhost:3000/api/users');
@@ -80,6 +180,7 @@ eleventyNavigation:
                 tableBody.innerHTML = ''; // Clear loading message
 
                 users.forEach(user => {
+                    // user is expected as [id, first_name, last_name, phone_number, city, state, zipcode]
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${user[0]}</td>
@@ -87,38 +188,85 @@ eleventyNavigation:
                         <td>${user[2]}</td>
                         <td>${user[3]}</td>
                         <td>${user[4]}</td>
+                        <td>${user[5]}</td>
+                        <td>${user[6]}</td>
                         <td>
-                            <button onclick="editUser(${user.id})">Edit</button>
-                            <button onclick="deleteUser(${user.id})">Delete</button>
+                            <button onclick="openEditModal(${user[0]}, '${user[1]}', '${user[2]}', '${user[3]}', '${user[4]}', '${user[5]}', '${user[6]}')">Edit</button>
+                            <button onclick="deleteUser(${user[0]})">Delete</button>
                         </td>
                     `;
                     tableBody.appendChild(row);
                 });
             } catch (err) {
                 console.error('Error fetching users:', err);
-                tableBody.innerHTML = '<tr><td colspan="7">Failed to load users.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="8">Failed to load users.</td></tr>';
             }
         }
 
         async function deleteUser(userId) {
             try {
-                const response = await fetch(`/api/users/${userId}`, { method: 'DELETE' });
+                const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+                    method: 'DELETE'
+                });
                 if (!response.ok) {
                     throw new Error(`Failed to delete user with ID ${userId}`);
                 }
                 alert('User deleted successfully!');
-                fetchUsers(); // Reload the list without reloading the page
+                fetchUsers();
             } catch (err) {
                 console.error('Error deleting user:', err);
                 alert('Failed to delete user');
             }
         }
 
-        function editUser(userId) {
-            localStorage.setItem('editingUserId', userId); // Save user ID for editing
-            location.href = '/edit-user/';
+        function openEditModal(id, firstName, lastName, phoneNumber, city, state, zipcode) {
+            document.getElementById('editUserId').value = id;
+            document.getElementById('editFirstName').value = firstName;
+            document.getElementById('editLastName').value = lastName;
+            document.getElementById('editPhoneNumber').value = phoneNumber;
+            document.getElementById('editCity').value = city;
+            document.getElementById('editState').value = state;
+            document.getElementById('editZipcode').value = zipcode;
+            document.getElementById('edit-modal').style.display = 'block';
         }
 
+        function closeEditModal() {
+            document.getElementById('edit-modal').style.display = 'none';
+        }
+
+        document.getElementById('edit-user-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userId = document.getElementById('editUserId').value;
+            const data = {
+                firstName: document.getElementById('editFirstName').value,
+                lastName: document.getElementById('editLastName').value,
+                phoneNumber: document.getElementById('editPhoneNumber').value,
+                city: document.getElementById('editCity').value,
+                state: document.getElementById('editState').value,
+                zipCode: document.getElementById('editZipcode').value
+            };
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to update user with ID ${userId}`);
+                }
+
+                alert('User updated successfully!');
+                closeEditModal();
+                fetchUsers(); // Refresh the user list
+            } catch (err) {
+                console.error(err);
+                alert(err.message);
+            }
+        });
+
+        // Load the user list on page load
         fetchUsers();
     </script>
 

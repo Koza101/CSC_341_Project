@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import bodyParser from 'body-parser';
 import { collectAndInsertDeviceInfo, insertForm } from './oracle_db.mjs';
@@ -5,7 +6,7 @@ import { connectToDatabase } from './oracle_db.mjs';
 import cors from 'cors';
 
 const corsOptions = {
-    origin: 'http://localhost:8080', // Replace with your frontend URL
+    origin: ['http://localhost:8080', 'http://localhost:8080/users'], // Replace with your frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
     credentials: true // Allow cookies if needed
 };
@@ -13,6 +14,8 @@ const corsOptions = {
 const app = express();
 
 app.use(cors(corsOptions));
+
+app.use(bodyParser.json());
 
 // Middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
