@@ -10,8 +10,9 @@ const corsOptions = {
     credentials: true // Allow cookies if needed
 };
 
-
 const app = express();
+
+app.use(cors(corsOptions));
 
 // Middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,8 +34,6 @@ app.post('/submit', async (req, res) => {
 app.listen(3000, () => {
     console.log('Server running on http://localhost:3000');
 });
-
-app.use(cors(corsOptions));
 
 //  Getting user information
 app.get('/api/users', async (req, res) => {
@@ -70,6 +69,8 @@ app.get('/api/users/:id', async (req, res) => {
         res.status(500).send('Error fetching user details');
     }
 });
+
+
 // Updating user information
 app.put('/api/users/:id', async (req, res) => {
     try {
@@ -106,5 +107,21 @@ app.delete('/api/users/:id', async (req, res) => {
     } catch (err) {
         console.error('Error deleting user:', err);
         res.status(500).send('Error deleting user');
+    }
+});
+
+app.get('/api/device', async (req, res) => {
+    console.log('Received request for /api/device');
+    try {
+        console.log('Fetching device from the database...');
+        const connection = await connectToDatabase();
+        const query = 'SELECT * FROM device'; // Fetch all device
+        const result = await connection.execute(query);
+        console.log('Device fetched successfully:', result.rows);
+        res.json(result.rows); // Return device data as JSON
+        await connection.close();
+    } catch (err) {
+        console.error('Error fetching device:', err);
+        res.status(500).send('Error fetching device');
     }
 });

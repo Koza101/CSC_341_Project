@@ -17,6 +17,7 @@ export async function connectToDatabase() {
     }
 }
 
+
 // Function to insert form data into the database
 export async function insertForm(data) {
     const {
@@ -153,44 +154,5 @@ export async function collectAndInsertDeviceInfo() {
     } catch (err) {
         console.error('Error collecting or inserting system information:', err);
         throw err;
-    }
-}
-
-async function fetchUserDetails() {
-    try {
-        const userId = localStorage.getItem('selectedUserId'); // Retrieve from Local Storage
-        console.log('Retrieved User ID:', userId); // Debug log
-
-        if (!userId) {
-            document.getElementById('user-details').innerHTML = `
-                <p>Error: No user ID found. Please go back and select a user.</p>
-                <a href="/users/">Go Back to User List</a>
-            `;
-            return;
-        }
-
-        const response = await fetch(`http://localhost:3000/api/users/${userId}`);
-        console.log('Response Status:', response.status);
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const user = await response.json();
-        console.log('Fetched User Details:', user);
-
-        const detailsDiv = document.getElementById('user-details');
-        detailsDiv.innerHTML = `
-            <p>ID: ${user[0]}</p>
-            <p>First Name: ${user[1]}</p>
-            <p>Last Name: ${user[2]}</p>
-            <p>Phone Number: ${user[3]}</p>
-            <p>City: ${user[4]}</p>
-            <p>State: ${user[5]}</p>
-            <p>ZIP Code: ${user[6]}</p>
-        `;
-    } catch (err) {
-        console.error('Error fetching user details:', err);
-        document.getElementById('user-details').innerHTML = '<p>Failed to load user details.</p>';
     }
 }
