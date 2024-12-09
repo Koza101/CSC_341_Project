@@ -1,29 +1,25 @@
-import 'dotenv/config';
-import express from 'express';
-import bodyParser from 'body-parser';
-import { collectAndInsertDeviceInfo, insertForm } from './oracle_db.mjs';
-import { connectToDatabase } from './oracle_db.mjs';
-import cors from 'cors';
+require('dotenv').config();
+const express = require('express');
+const bodyParser = require('body-parser');
+const { collectAndInsertDeviceInfo, insertForm, connectToDatabase } = require('./oracle_db.js');
+const cors = require('cors');
 
 const corsOptions = {
-    origin: ['http://localhost:8080', 'http://localhost:8080/users'], // Replace with your frontend URL
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
-    credentials: true // Allow cookies if needed
+    origin: ['http://localhost:8080', 'http://localhost:8080/users'], // Frontend URLs
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
 };
 
 const app = express();
 
 app.use(cors(corsOptions));
-
 app.use(bodyParser.json());
-
-// Middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Route to handle form submission
 app.post('/submit', async (req, res) => {
     try {
-        console.log('Form Data Received:', req.body); // Log the received form data
+        console.log('Form Data Received:', req.body);
         await collectAndInsertDeviceInfo();
         await insertForm(req.body);
         res.send('Form and system information submitted successfully!');
@@ -33,12 +29,11 @@ app.post('/submit', async (req, res) => {
     }
 });
 
-// Start the server
 app.listen(3000, () => {
     console.log('Server running on http://localhost:3000');
 });
 
-//  Getting user information
+// Get all users
 app.get('/api/users', async (req, res) => {
     try {
         console.log('Connecting to the database...');
@@ -48,9 +43,9 @@ app.get('/api/users', async (req, res) => {
         const query = 'SELECT * FROM users';
         const result = await connection.execute(query);
 
-        console.log('Query executed. Result:', result.rows); // Log the query result
-        res.json(result.rows); // Send rows as JSON
-
+        console.log('Query executed. Result:', result.rows);
+        res.json(result.rows);
+        
         await connection.close();
         console.log('Connection closed.');
     } catch (err) {
@@ -59,13 +54,13 @@ app.get('/api/users', async (req, res) => {
     }
 });
 
-// More getting user information
+// Get user by ID
 app.get('/api/users/:id', async (req, res) => {
     try {
         const connection = await connectToDatabase();
         const query = 'SELECT * FROM users WHERE user_ID = :id';
         const result = await connection.execute(query, [req.params.id]);
-        res.json(result.rows[0]); // Send the first result
+        res.json(result.rows[0]);
         await connection.close();
     } catch (err) {
         console.error('Error fetching user details:', err);
@@ -73,8 +68,7 @@ app.get('/api/users/:id', async (req, res) => {
     }
 });
 
-
-// Updating user information
+// Update user
 app.put('/api/users/:id', async (req, res) => {
     try {
         const connection = await connectToDatabase();
@@ -99,7 +93,7 @@ app.put('/api/users/:id', async (req, res) => {
     }
 });
 
-// Deleting user information
+// Delete user
 app.delete('/api/users/:id', async (req, res) => {
     try {
         const connection = await connectToDatabase();
@@ -113,15 +107,16 @@ app.delete('/api/users/:id', async (req, res) => {
     }
 });
 
+// Get devices
 app.get('/api/device', async (req, res) => {
     console.log('Received request for /api/device');
     try {
         console.log('Fetching device from the database...');
         const connection = await connectToDatabase();
-        const query = 'SELECT * FROM device'; // Fetch all device
+        const query = 'SELECT * FROM device';
         const result = await connection.execute(query);
         console.log('Device fetched successfully:', result.rows);
-        res.json(result.rows); // Return device data as JSON
+        res.json(result.rows);
         await connection.close();
     } catch (err) {
         console.error('Error fetching device:', err);

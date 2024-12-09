@@ -1,8 +1,7 @@
-import oracledb from 'oracledb';
-import si from 'systeminformation';
+const oracledb = require('oracledb');
+const si = require('systeminformation');
 
-// Function to connect to the database
-export async function connectToDatabase() {
+async function connectToDatabase() {
     try {
         const connection = await oracledb.getConnection({
             user: process.env.DB_USER,
@@ -17,9 +16,7 @@ export async function connectToDatabase() {
     }
 }
 
-
-// Function to insert form data into the database
-export async function insertForm(data) {
+async function insertForm(data) {
     const {
         firstName,
         lastName,
@@ -34,12 +31,9 @@ export async function insertForm(data) {
     try {
         const query = `
             INSERT INTO users (
-                first_name, last_name, phone_number, city, "state", 
-                zipcode
-            ) 
-            VALUES (
-                :firstName, :lastName, :phoneNumber, :city, :state, 
-                :zipCode
+                first_name, last_name, phone_number, city, "state", zipcode
+            ) VALUES (
+                :firstName, :lastName, :phoneNumber, :city, :state, :zipCode
             )
         `;
 
@@ -57,11 +51,11 @@ export async function insertForm(data) {
         console.error('Error inserting form data:', err);
         throw err;
     } finally {
-        await connection.close(); // Ensure the connection is closed
+        await connection.close();
     }
 }
 
-export async function insertDevice(data) {
+async function insertDevice(data) {
     const {
         CPU_Brand,
         CPU_Cores,
@@ -77,8 +71,7 @@ export async function insertDevice(data) {
         const query = `
             INSERT INTO device (
                 CPU_Brand, CPU_Cores, Sys_Manufacturer, Sys_Model, Sys_OS, Memory_Type
-            ) 
-            VALUES (
+            ) VALUES (
                 :CPU_Brand, :CPU_Cores, :Sys_Manufacturer, :Sys_Model, :Sys_OS, :Memory_Type
             )
         `;
@@ -97,12 +90,11 @@ export async function insertDevice(data) {
         console.error('Error inserting device data:', err);
         throw err;
     } finally {
-        await connection.close(); // Ensure the connection is closed
+        await connection.close();
     }
 }
 
-// Function to fetch all devices from the database
-export async function fetchDevices() {
+async function fetchDevices() {
     const connection = await connectToDatabase();
 
     try {
@@ -110,24 +102,22 @@ export async function fetchDevices() {
         const result = await connection.execute(query);
 
         console.log('Devices fetched successfully:', result.rows);
-        return result.rows; // Return the rows for further use
+        return result.rows;
     } catch (err) {
         console.error('Error fetching devices:', err);
         throw err;
     } finally {
-        await connection.close(); // Ensure the connection is closed
+        await connection.close();
     }
 }
 
-export async function collectAndInsertDeviceInfo() {
+async function collectAndInsertDeviceInfo() {
     try {
-        // Collect system information
         const cpuInfo = await si.cpu();
         const systemInfo = await si.system();
         const osInfo = await si.osInfo();
         const memoryInfo = await si.mem();
 
-        // Prepare data for insertion
         const data = {
             CPU_Brand: cpuInfo.manufacturer || 'Unknown',
             CPU_Cores: cpuInfo.cores.toString(),
@@ -137,13 +127,11 @@ export async function collectAndInsertDeviceInfo() {
             Memory_Type: memoryInfo.total ? `${(memoryInfo.total / 1073741824).toFixed(2)} GB` : 'Unknown'
         };
 
-        // Insert data into the database
         const connection = await connectToDatabase();
         const query = `
             INSERT INTO device (
                 CPU_Brand, CPU_Cores, Sys_Manufacturer, Sys_Model, Sys_OS, Memory_Type
-            ) 
-            VALUES (
+            ) VALUES (
                 :CPU_Brand, :CPU_Cores, :Sys_Manufacturer, :Sys_Model, :Sys_OS, :Memory_Type
             )
         `;
@@ -156,3 +144,11 @@ export async function collectAndInsertDeviceInfo() {
         throw err;
     }
 }
+
+module.exports = {
+    connectToDatabase,
+    insertForm,
+    insertDevice,
+    fetchDevices,
+    collectAndInsertDeviceInfo
+};
