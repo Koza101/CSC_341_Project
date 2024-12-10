@@ -10,7 +10,7 @@
         "build:eleventy": "cross-env ELEVENTY_ENV=PROD eleventy",
         "start": "del-cli ./public --force && npm-run-all --parallel watch:* server",
         "build": "run-s build:*",
-        "server": "node src/Database_Files/server.mjs"
+        "server": "node src/Database_Files/server.js"
     },
     "repository": {
         "type": "git"
